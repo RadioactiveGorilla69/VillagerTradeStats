@@ -3,7 +3,8 @@
 	"package": "com.jason.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
-		"TradeXpMixin"
+		"TradeXpMixin",
+		"MerchantScreenAccessor"
 	],
 	"injectors": {
 		"defaultRequire": 1

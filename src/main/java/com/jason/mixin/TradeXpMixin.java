@@ -22,29 +22,28 @@ public abstract class TradeXpMixin extends Screen {
 
 	@Inject(method = "render", at = @At("RETURN"))
 	private void renderXp(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-		MerchantScreenHandler handler = ((MerchantScreen)(Object)this).getScreenHandler();
+		MerchantScreen merchantScreen = (MerchantScreen)(Object)this;
+		MerchantScreenHandler handler = merchantScreen.getScreenHandler();
 		TradeOfferList offers = handler.getRecipes();
 		TextRenderer font = MinecraftClient.getInstance().textRenderer;
+		int startIndex = ((MerchantScreenAccessor)merchantScreen).getIndexStartOffset();
 
-		// Start the XP text next to the second item of each trade offer
-		for(int i = 0; i < offers.size(); i++) {
-			TradeOffer offer = offers.get(i);
-			int xp = offer.getMerchantExperience();
+		for(int i = 0; i < Math.min(offers.size() - startIndex, 7); i++) {
+			TradeOffer offer = offers.get(i + startIndex);
 
-			// Based on how MerchantScreen lays out offers
-			int x = this.width / 2 - 170; // Move to the right of the trade result slot
-			int y = this.height / 2 + (i * 20) - 48; // Align vertically with trade row
-
-			//TEST TOMORROW, i*x (20-24) ish, 168 38, also add color and config
+			int x = this.width / 2 - 158;
+			int y = this.height / 2 - 58 + (i * 20);
 
 			context.drawText(
 					font,
-					"XP: " + xp,
+					String.valueOf(offer.getMerchantExperience()),
 					x,
 					y,
-					0xFFFFFF, // White color for now
+					0xFFFFFF,
 					false
 			);
+
+			context.drawText(font, "XP", x, this.height/2 - 77, 0xFFFFFF, false);
 		}
 	}
 }
