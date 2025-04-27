@@ -32,8 +32,8 @@ public abstract class TradeXpMixin extends Screen {
 			int xp = offer.getMerchantExperience();
 
 			// Based on how MerchantScreen lays out offers
-			int x = this.width / 2 - 168; // Move to the right of the trade result slot
-			int y = this.height / 2 - (i * 22) - 38; // Align vertically with trade row
+			int x = this.width / 2 - 170; // Move to the right of the trade result slot
+			int y = this.height / 2 + (i * 20) - 48; // Align vertically with trade row
 
 			//TEST TOMORROW, i*x (20-24) ish, 168 38, also add color and config
 
