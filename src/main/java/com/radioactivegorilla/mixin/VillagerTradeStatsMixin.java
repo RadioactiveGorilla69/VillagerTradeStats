@@ -10,6 +10,7 @@ import net.minecraft.text.Text;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradeOfferList;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -31,40 +32,73 @@ public abstract class VillagerTradeStatsMixin extends Screen {
         int x = this.width / 2 - 158;
 
         int merchantXp = handler.getExperience();
-        int requiredXp = 0;
 
-        if (merchantXp >= 0) {
-            requiredXp = 10 - merchantXp;
-        }
-        if (merchantXp >= 10) {
-            requiredXp = 70 - merchantXp;
-        }
-        if (merchantXp >= 70) {
-            requiredXp = 150 - merchantXp;
-        }
-        if (merchantXp >= 150) {
-            requiredXp = 250 - merchantXp;
-        }
-        if (merchantXp >= 250) {
-            requiredXp = 0;
+        boolean isWanderingTrader = true;
+        if (offers.size() > 4) {
+            for (TradeOffer offer : offers) {
+                if (offer.getMerchantExperience() != 1) {
+                    isWanderingTrader = false;
+                }
+            }
         }
 
-        int tradesToLevelUp = 0;
+        if (!isWanderingTrader) {
 
-        for (int i = 0; i < Math.min(offers.size() - startIndex, 7); i++) {
-            TradeOffer offer = offers.get(i + startIndex);
-            tradesToLevelUp = (int) Math.ceil((double) (requiredXp) / offer.getMerchantExperience());
-            int y = this.height / 2 - 58 + (i * 20);
+            int requiredXp = 0;
 
-            context.drawText(font, String.valueOf(offer.getMerchantExperience()), x, y, 0xFFFFFF, false);
-            if (requiredXp != 0) {
-                context.drawText(font, String.valueOf(tradesToLevelUp), x - 100, y, 0xFFFFFF, false);
+            if (merchantXp >= 0) {
+                requiredXp = 10 - merchantXp;
+            }
+            if (merchantXp >= 10) {
+                requiredXp = 70 - merchantXp;
+            }
+            if (merchantXp >= 70) {
+                requiredXp = 150 - merchantXp;
+            }
+            if (merchantXp >= 150) {
+                requiredXp = 250 - merchantXp;
+            }
+            if (merchantXp > 250) {
+                requiredXp = 0;
             }
 
+            int tradesToLevelUp;
+            int highestXPperTrade = getHighestXpPerTrade(offers, startIndex);
+
+            for (int i = 0; i < Math.min(offers.size() - startIndex, 7); i++) {
+                TradeOffer offer = offers.get(i + startIndex);
+                tradesToLevelUp = (int) Math.ceil((double) (requiredXp) / offer.getMerchantExperience());
+                int y = this.height / 2 - 58 + (i * 20);
+
+                if (offer.getMerchantExperience() == highestXPperTrade) {
+                    context.drawText(font, String.valueOf(offer.getMerchantExperience()), x, y, 0x09eb10, true);
+                    if (requiredXp != 0) {
+                        context.drawText(font, String.valueOf(tradesToLevelUp), x - 130 + (font.getWidth("Trades to next level")) / 2, y, 0x09eb10, true);
+                    }
+                } else {
+                    context.drawText(font, String.valueOf(offer.getMerchantExperience()), x, y, 0xFFFFFF, false);
+                    if (requiredXp != 0) {
+                        context.drawText(font, String.valueOf(tradesToLevelUp), x - 130 + (font.getWidth("Trades to next level")) / 2, y, 0xFFFFFF, false);
+                    }
+                }
+            }
             if (requiredXp != 0) {
-                context.drawText(font, "Trades to next level", x - 164, this.height / 2 - 77, 0xFFFFFF, false);
+                context.drawText(font, "Trades to next level", x - 130, this.height / 2 - 77, 0xFFFFFF, false);
             }
             context.drawText(font, "XP", x, this.height / 2 - 77, 0xFFFFFF, false);
+            context.drawText(font, "Villager XP: " + handler.getExperience(), (this.width - font.getWidth("Villager XP: " + handler.getExperience())) / 2, this.height / 4 + 35, 0xFFFFFF, true);
         }
+    }
+
+    @Unique
+    private int getHighestXpPerTrade(TradeOfferList offers, int startIndex) {
+        int highestXp = 0;
+        for (int i = startIndex; i < Math.min(offers.size(), startIndex + 7); i++) {
+            int offerXp = offers.get(i).getMerchantExperience();
+            if (offerXp > highestXp) {
+                highestXp = offerXp;
+            }
+        }
+        return highestXp;
     }
 }
