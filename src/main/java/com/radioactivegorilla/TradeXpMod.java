@@ -1,6 +1,5 @@
-package com.jason;
+package com.radioactivegorilla;
 
-import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.ModInitializer;
 
 import org.slf4j.Logger;
@@ -16,6 +15,6 @@ public class TradeXpMod implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		LOGGER.info("Initialized.");
+		LOGGER.info("TradeXpMod Initialized.");
 	}
 }

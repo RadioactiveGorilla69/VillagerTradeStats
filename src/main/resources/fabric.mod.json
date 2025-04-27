@@ -3,9 +3,9 @@
 	"id": "tradexpmod",
 	"version": "${version}",
 	"name": "TradeXpMod",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "Displays XP given to villagers from each trade and how many trades to level up the villager",
 	"authors": [
-		"Me!"
+		"RadioactiveGorilla69"
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
@@ -16,7 +16,7 @@
 	"environment": "client",
 	"entrypoints": {
 		"main": [
-			"com.jason.TradeXpMod"
+			"com.radioactivegorilla.TradeXpMod"
 		]
 	},
 	"mixins": [

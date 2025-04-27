@@ -1,4 +1,4 @@
-package com.jason.mixin;
+package com.radioactivegorilla.mixin;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -49,8 +49,6 @@ public abstract class TradeXpMixin extends Screen {
             requiredXp = 0;
         }
 
-        System.out.println("required: " + requiredXp);
-        System.out.println("merchant: " + merchantXp);
         int tradesToLevelUp = 0;
 
         for (int i = 0; i < Math.min(offers.size() - startIndex, 7); i++) {

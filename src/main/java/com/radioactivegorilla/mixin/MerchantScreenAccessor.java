@@ -1,4 +1,4 @@
-package com.jason.mixin;
+package com.radioactivegorilla.mixin;
 
 import net.minecraft.client.gui.screen.ingame.MerchantScreen;
 import org.spongepowered.asm.mixin.Mixin;
