@@ -51,20 +51,22 @@ public abstract class TradeXpMixin extends Screen {
 
         System.out.println("required: " + requiredXp);
         System.out.println("merchant: " + merchantXp);
+        int tradesToLevelUp = 0;
 
         for (int i = 0; i < Math.min(offers.size() - startIndex, 7); i++) {
             TradeOffer offer = offers.get(i + startIndex);
-            int tradesToLevelUp = (int) Math.ceil((double) (requiredXp) / offer.getMerchantExperience());
+            tradesToLevelUp = (int) Math.ceil((double) (requiredXp) / offer.getMerchantExperience());
             int y = this.height / 2 - 58 + (i * 20);
 
-            if(requiredXp != 0) {
-                context.drawText(font, String.valueOf(offer.getMerchantExperience()), x, y, 0xFFFFFF, false);
+            context.drawText(font, String.valueOf(offer.getMerchantExperience()), x, y, 0xFFFFFF, false);
+            if (requiredXp != 0) {
+                context.drawText(font, String.valueOf(tradesToLevelUp), x - 100, y, 0xFFFFFF, false);
             }
-            context.drawText(font, String.valueOf(tradesToLevelUp), x - 100, y, 0xFFFFFF, false);
+
+            if (requiredXp != 0) {
+                context.drawText(font, "Villager trades to level up", x - 168, this.height / 2 - 77, 0xFFFFFF, false);
+            }
+            context.drawText(font, "XP", x, this.height / 2 - 77, 0xFFFFFF, false);
         }
-        if (requiredXp != 0) {
-            context.drawText(font, "Villager trades to level up", x - 150, this.height / 2 - 77, 0xFFFFFF, false);
-        }
-        context.drawText(font, "XP", x, this.height / 2 - 77, 0xFFFFFF, false);
     }
 }
