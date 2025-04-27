@@ -35,13 +35,17 @@ public abstract class TradeXpMixin extends Screen {
 
         if (merchantXp >= 0) {
             requiredXp = 10 - merchantXp;
-        } else if (merchantXp >= 10) {
-            requiredXp = 60 - merchantXp;
-        } else if (merchantXp >= 70) {
-            requiredXp = 80 - merchantXp;
-        } else if (merchantXp >= 150) {
-            requiredXp = 100 - merchantXp;
-        } else if (merchantXp >= 250) {
+        }
+        if (merchantXp >= 10) {
+            requiredXp = 70 - merchantXp;
+        }
+        if (merchantXp >= 70) {
+            requiredXp = 150 - merchantXp;
+        }
+        if (merchantXp >= 150) {
+            requiredXp = 250 - merchantXp;
+        }
+        if (merchantXp >= 250) {
             requiredXp = 0;
         }
 
@@ -50,14 +54,16 @@ public abstract class TradeXpMixin extends Screen {
 
         for (int i = 0; i < Math.min(offers.size() - startIndex, 7); i++) {
             TradeOffer offer = offers.get(i + startIndex);
-            int tradesToLevelUp = (int) Math.ceil((double) (requiredXp - merchantXp) / offer.getMerchantExperience());
+            int tradesToLevelUp = (int) Math.ceil((double) (requiredXp) / offer.getMerchantExperience());
             int y = this.height / 2 - 58 + (i * 20);
 
-            context.drawText(font, String.valueOf(offer.getMerchantExperience()), x, y, 0xFFFFFF, false);
+            if(requiredXp != 0) {
+                context.drawText(font, String.valueOf(offer.getMerchantExperience()), x, y, 0xFFFFFF, false);
+            }
             context.drawText(font, String.valueOf(tradesToLevelUp), x - 100, y, 0xFFFFFF, false);
         }
         if (requiredXp != 0) {
-            context.drawText(font, "Villager trades to level up", x - 100, this.height / 2 - 77, 0xFFFFFF, false);
+            context.drawText(font, "Villager trades to level up", x - 150, this.height / 2 - 77, 0xFFFFFF, false);
         }
         context.drawText(font, "XP", x, this.height / 2 - 77, 0xFFFFFF, false);
     }
