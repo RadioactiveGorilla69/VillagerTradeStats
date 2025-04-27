@@ -5,8 +5,8 @@ import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TradeXpMod implements ModInitializer {
-	public static final String MOD_ID = "tradexpmod";
+public class VillagerTradeStats implements ModInitializer {
+	public static final String MOD_ID = "villagertradestats";
 
 	// This logger is used to write text to the console and the log file.
 	// It is considered best practice to use your mod id as the logger's name.
@@ -15,6 +15,6 @@ public class TradeXpMod implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		LOGGER.info("TradeXpMod Initialized.");
+		LOGGER.info("VillagerTradeStats Initialized.");
 	}
 }

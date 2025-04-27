@@ -15,8 +15,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(MerchantScreen.class)
-public abstract class TradeXpMixin extends Screen {
-    protected TradeXpMixin(Text title) {
+public abstract class VillagerTradeStatsMixin extends Screen {
+    protected VillagerTradeStatsMixin(Text title) {
         super(title);
     }
 
@@ -62,7 +62,7 @@ public abstract class TradeXpMixin extends Screen {
             }
 
             if (requiredXp != 0) {
-                context.drawText(font, "Villager trades to level up", x - 168, this.height / 2 - 77, 0xFFFFFF, false);
+                context.drawText(font, "Trades to next level", x - 164, this.height / 2 - 77, 0xFFFFFF, false);
             }
             context.drawText(font, "XP", x, this.height / 2 - 77, 0xFFFFFF, false);
         }

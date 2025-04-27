@@ -1,26 +1,25 @@
 {
 	"schemaVersion": 1,
-	"id": "tradexpmod",
+	"id": "villagertradestats",
 	"version": "${version}",
-	"name": "TradeXpMod",
+	"name": "VillagerTradeStats",
 	"description": "Displays XP given to villagers from each trade and how many trades to level up the villager",
 	"authors": [
 		"RadioactiveGorilla69"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/RadioactiveGorilla69/VillagerTradeStats"
 	},
 	"license": "CC0-1.0",
-	"icon": "assets/tradexpmod/icon.png",
+	"icon": "assets/villagertradestats/icon.png",
 	"environment": "client",
 	"entrypoints": {
 		"main": [
-			"com.radioactivegorilla.TradeXpMod"
+			"com.radioactivegorilla.VillagerTradeStats"
 		]
 	},
 	"mixins": [
-		"tradexpmod.mixins.json"
+		"villagertradestats.mixin.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.16.14",
