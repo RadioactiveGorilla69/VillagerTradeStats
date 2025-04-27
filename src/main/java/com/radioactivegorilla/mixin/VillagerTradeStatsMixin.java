@@ -33,12 +33,17 @@ public abstract class VillagerTradeStatsMixin extends Screen {
 
         int merchantXp = handler.getExperience();
 
-        boolean isWanderingTrader = true;
+        boolean isWanderingTrader = false;
         if (offers.size() > 4) {
+            boolean allOffersHave1XP = true;
             for (TradeOffer offer : offers) {
                 if (offer.getMerchantExperience() != 1) {
-                    isWanderingTrader = false;
+                    allOffersHave1XP = false;
+                    break;
                 }
+            }
+            if(allOffersHave1XP) {
+                isWanderingTrader = true;
             }
         }
 
