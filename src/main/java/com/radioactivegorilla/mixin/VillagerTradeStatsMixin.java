@@ -99,7 +99,7 @@ public abstract class VillagerTradeStatsMixin extends Screen {
 
             int color = (offer.getMerchantExperience() == highestXpPerTrade) ? 0x09eb10 : 0xFF404040;
             boolean bold = (offer.getMerchantExperience() == highestXpPerTrade);
-            drawTradesUntilSoldOut(context, font, this.width/2 - 79, y + 5, offers, i);
+            drawTradesUntilSoldOut(context, font, this.width/2 - 79, y + 5, offers, i + startIndex);
             context.drawText(font, String.valueOf(offer.getMerchantExperience()), x + (font.getWidth("XP") - font.getWidth(String.valueOf(offer.getMerchantExperience())))/2, y, color, bold);
         }
     }
