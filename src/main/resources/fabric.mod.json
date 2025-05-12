@@ -3,7 +3,7 @@
 	"id": "villagertradestats",
 	"version": "${version}",
 	"name": "VillagerTradeStats",
-	"description": "Displays XP given to villagers from each trade, how many trades until the trade is disabled, and the current villager XP",
+	"description": "Displays XP given to villagers from each trade, best trade in terms of XP, how many trades until the trade is disabled, and the current villager XP",
 	"authors": [
 		"RadioactiveGorilla69"
 	],
