@@ -3,7 +3,7 @@
 	"id": "villagertradestats",
 	"version": "${version}",
 	"name": "VillagerTradeStats",
-	"description": "Displays XP given to villagers from each trade and how many trades to level up the villager",
+	"description": "Displays XP given to villagers from each trade and how many trades until the trade is disabled",
 	"authors": [
 		"RadioactiveGorilla69"
 	],

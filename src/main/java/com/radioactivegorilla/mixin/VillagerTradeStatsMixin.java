@@ -8,7 +8,6 @@ import net.minecraft.client.gui.screen.ingame.MerchantScreen;
 import net.minecraft.screen.MerchantScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.village.Merchant;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradeOfferList;
 import org.spongepowered.asm.mixin.Mixin;
@@ -48,27 +47,8 @@ public abstract class VillagerTradeStatsMixin extends Screen {
         int startIndex = ((MerchantScreenAccessor) merchantScreen).getIndexStartOffset();
 
         int x = this.width/2 - 154;
-        int merchantXp = handler.getExperience();
 
         if (!isWanderingTrader(offers)) {
-            int requiredXp;
-
-            if (merchantXp >= 250) {
-                requiredXp = 0;
-            }
-            else if (merchantXp >= 150) {
-                requiredXp = 250 - merchantXp;
-            }
-            else if (merchantXp >= 70) {
-                requiredXp = 150 - merchantXp;
-            }
-            else if (merchantXp >= 10) {
-                requiredXp = 70 - merchantXp;
-            }
-            else {
-                requiredXp = 10 - merchantXp;
-            }
-
             int highestXpPerTrade = getHighestXpPerTrade(offers, startIndex);
 
             drawXpAndNextLevel(context, font, x, this.height/2 - 58, offers, indexStartOffset, highestXpPerTrade);
