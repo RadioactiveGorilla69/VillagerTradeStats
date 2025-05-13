@@ -10,7 +10,7 @@
 	"contact": {
 		"sources": "https://github.com/RadioactiveGorilla69/VillagerTradeStats"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"icon": "assets/villagertradestats/icon.png",
 	"environment": "client",
 	"entrypoints": {
@@ -26,8 +26,5 @@
 		"minecraft": "~1.21.1",
 		"java": ">=21",
 		"fabric-api": "*"
-	},
-	"suggests": {
-		"another-mod": "*"
 	}
 }
