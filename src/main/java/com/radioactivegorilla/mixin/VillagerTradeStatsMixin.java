@@ -1,7 +1,9 @@
 package com.radioactivegorilla.mixin;
 
+
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.MerchantScreen;
@@ -21,6 +23,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class VillagerTradeStatsMixin extends Screen {
 
     @Shadow int indexStartOffset;
+
+    @Shadow public abstract void render(DrawContext context, int mouseX, int mouseY, float deltaTicks);
 
     protected VillagerTradeStatsMixin(Text title) {
         super(title);
@@ -53,7 +57,7 @@ public abstract class VillagerTradeStatsMixin extends Screen {
 
             drawXpAndNextLevel(context, font, x, this.height/2 - 58, offers, indexStartOffset, highestXpPerTrade);
             context.drawText(font, "XP", x, this.height/2 - 77, 0xFF404040, false);
-            context.drawText(font, "Villager XP: " + handler.getExperience(), (this.width - font.getWidth("Villager XP: " + handler.getExperience()))/2, this.height/4 + 35, 0xFFFFFF, true);
+            context.drawText(font, "Villager XP: " + handler.getExperience(), (this.width - font.getWidth("Villager XP: " + handler.getExperience()))/2, this.height/4 + 35, 0xFFFFFFFF, true);
         }
     }
 
@@ -83,12 +87,12 @@ public abstract class VillagerTradeStatsMixin extends Screen {
     @Unique
     private void drawThinBackground(DrawContext context, int x, int y, int width, int height){
         Identifier thin_background = Identifier.of("villagertradestats", "textures/gui/thin_background.png");
-        context.drawTexture(thin_background, x, y, 0, 0, width, height, width, 256);
+        context.drawTexture(RenderPipelines.GUI_TEXTURED, thin_background, x, y, 0, 0, width, height, width, 256);
     }
 
     @Unique
     private void drawTradesUntilSoldOut(DrawContext context, TextRenderer font, int x, int y, TradeOfferList offers, int i){
-        context.drawText(font, String.valueOf(offers.get(i).getMaxUses() - offers.get(i).getUses()), x, y, 0xFFFFFF, false);
+        context.drawText(font, String.valueOf(offers.get(i).getMaxUses() - offers.get(i).getUses()), x, y, 0xFFFFFFFF, false);
     }
 
     @Unique
@@ -97,7 +101,7 @@ public abstract class VillagerTradeStatsMixin extends Screen {
             TradeOffer offer = offers.get(i + startIndex);
             if(i != 0) y += 20;
 
-            int color = (offer.getMerchantExperience() == highestXpPerTrade) ? 0x09eb10 : 0xFF404040;
+            int color = (offer.getMerchantExperience() == highestXpPerTrade) ? 0xFF09eb10 : 0xFF404040;
             boolean bold = (offer.getMerchantExperience() == highestXpPerTrade);
             drawTradesUntilSoldOut(context, font, this.width/2 - 79, y + 5, offers, i + startIndex);
             context.drawText(font, String.valueOf(offer.getMerchantExperience()), x + (font.getWidth("XP") - font.getWidth(String.valueOf(offer.getMerchantExperience())))/2, y, color, bold);
