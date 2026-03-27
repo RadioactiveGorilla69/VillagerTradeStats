@@ -55,7 +55,7 @@ public abstract class VillagerTradeStatsMixin extends Screen {
 
             drawXpAndNextLevel(context, font, x, this.height/2 - 58, offers, scrollOff, highestXpPerTrade);
             context.drawString(font, "XP", x, this.height/2 - 77, 0xFF404040, false);
-            context.drawString(font, "Villager XP: " + handler.getTraderXp(), (this.width - font.width("Villager XP: " + handler.getTraderXp()))/2, this.height/4 + 35, 0xFFFFFFFF, true);
+            context.drawString(font, "Villager XP: " + handler.getTraderXp(), (this.width - font.width("Villager XP: " + handler.getTraderXp()))/2, this.height/2 - 100, 0xFFFFFFFF, true);
         }
     }
 
