@@ -8,7 +8,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.MerchantScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.MerchantMenu;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
@@ -84,7 +84,7 @@ public abstract class VillagerTradeStatsMixin extends Screen {
 
     @Unique
     private void drawThinBackground(GuiGraphics context, int x, int y, int width, int height){
-        Identifier thin_background = Identifier.fromNamespaceAndPath("villagertradestats", "textures/gui/thin_background.png");
+        ResourceLocation thin_background = ResourceLocation.fromNamespaceAndPath("villagertradestats", "textures/gui/thin_background.png");
         context.blit(RenderPipelines.GUI_TEXTURED, thin_background, x, y, 0, 0, width, height, width, 256);
     }
 
