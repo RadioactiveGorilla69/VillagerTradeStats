@@ -28,7 +28,7 @@ public abstract class VillagerTradeStatsMixin extends Screen {
         super(title);
     }
 
-    @Inject(method = "renderContents", at = @At("RETURN"))
+    @Inject(method = "render", at = @At("RETURN"))
     private void renderBackground(GuiGraphics context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         MerchantScreen merchantScreen = (MerchantScreen) (Object) this;
         MerchantMenu handler = merchantScreen.getMenu();
@@ -40,7 +40,7 @@ public abstract class VillagerTradeStatsMixin extends Screen {
         }
     }
 
-    @Inject(method = "renderContents", at = @At("RETURN"))
+    @Inject(method = "render", at = @At("RETURN"))
     private void renderXpAndTradeLevelAndTradeUses(GuiGraphics context, int mouseX, int mouseY, float delta, CallbackInfo ci){
         MerchantScreen merchantScreen = (MerchantScreen) (Object) this;
         MerchantMenu handler = merchantScreen.getMenu();
