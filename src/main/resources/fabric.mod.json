@@ -16,6 +16,12 @@
 	"entrypoints": {
 		"main": [
 			"com.radioactivegorilla.VillagerTradeStats"
+		],
+		"client": [
+			"com.radioactivegorilla.VillagerTradeStatsClient"
+		],
+		"modmenu": [
+			"com.radioactivegorilla.config.ModMenuIntegration"
 		]
 	},
 	"mixins": [
@@ -25,6 +31,7 @@
 		"fabricloader": ">=0.17.2",
 		"fabric-api": "*",
 		"minecraft": ">=1.21.11",
-		"java": ">=21"
+		"java": ">=21",
+		"yet_another_config_lib_v3": ">=3.8.2+1.21.11-fabric"
 	}
 }
