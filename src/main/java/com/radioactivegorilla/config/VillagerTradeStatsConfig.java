@@ -61,7 +61,7 @@ public class VillagerTradeStatsConfig {
                                 .name(Component.literal("Change Highest XP Color"))
                                 .description(OptionDescription.of(Component.literal("Change the color of the Highest XP trade")))
                                 .binding(defaults.highestXpColor, () -> config.highestXpColor, val -> config.highestXpColor = val)
-                                .controller(ColorControllerBuilder::create)
+                                .controller(opt -> ColorControllerBuilder.create(opt).allowAlpha(true))
                                 .build())
                         .build())
                 )

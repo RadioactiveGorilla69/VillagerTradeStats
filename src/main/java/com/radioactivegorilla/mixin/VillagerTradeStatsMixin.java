@@ -9,9 +9,9 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.MerchantScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.npc.villager.Villager;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.inventory.MerchantMenu;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
@@ -27,7 +27,7 @@ public abstract class VillagerTradeStatsMixin extends Screen {
 
     @Shadow int scrollOff;
 
-    @Unique private static final Identifier THIN_BACKGROUND = Identifier.fromNamespaceAndPath("villagertradestats", "textures/gui/thin_background.png");
+    @Unique private static final ResourceLocation THIN_BACKGROUND = ResourceLocation.fromNamespaceAndPath("villagertradestats", "textures/gui/thin_background.png");
 
     @Unique private static final int MAX_VISIBLE_TRADES = 7;
 

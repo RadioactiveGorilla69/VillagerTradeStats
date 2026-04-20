@@ -2,8 +2,8 @@ package com.radioactivegorilla;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
-import net.minecraft.world.entity.npc.wanderingtrader.WanderingTrader;
-import net.minecraft.world.entity.npc.villager.Villager;
+import net.minecraft.world.entity.npc.WanderingTrader;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.InteractionResult;
 
 public class VillagerTradeStatsClient implements ClientModInitializer {
