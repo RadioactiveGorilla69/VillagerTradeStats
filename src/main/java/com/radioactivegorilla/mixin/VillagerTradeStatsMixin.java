@@ -92,7 +92,7 @@ public abstract class VillagerTradeStatsMixin extends Screen {
 
         int xpTextWidth = font.width("XP");
         int tradesLeftX = this.width/2 + TRADES_LEFT_OFFSET_X;
-        int highestXpColor = cfg.highestXpColor.getRGB();
+        int highestXpColor = cfg.highestXpColor.getRGB() | 0xFF000000;
 
         for (int i = 0; i < Math.min(Math.max(offers.size() - startIndex, 0), MAX_VISIBLE_TRADES); i++) { //Math.max in case startIndex is ever greater than offer size (shouldn't happen in vanilla)
             int rowY = y + i * ROW_HEIGHT;
@@ -133,7 +133,7 @@ public abstract class VillagerTradeStatsMixin extends Screen {
             int xp = offer.getXp();
             String xpText = String.valueOf(xp);
             int xpValueWidth = font.width(xpText);
-            boolean isHighest = xp == highestXpPerTrade;
+            boolean isHighest = (xp == highestXpPerTrade);
             int color = (isHighest) ? highestXpColor : 0xFF404040;
 
             context.drawString(font, xpText, x + (xpTextWidth - xpValueWidth) / 2, y, color, isHighest); //isHighest for bold text
