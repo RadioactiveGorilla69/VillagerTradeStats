@@ -4,14 +4,14 @@ import com.radioactivegorilla.MerchantContext;
 import com.radioactivegorilla.config.VillagerTradeStatsConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.MerchantScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.inventory.MerchantMenu;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
@@ -25,9 +25,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(MerchantScreen.class)
 public abstract class VillagerTradeStatsMixin extends Screen {
 
-    @Shadow int scrollOff;
+    @Shadow private int scrollOff;
 
-    @Unique private static final ResourceLocation THIN_BACKGROUND = ResourceLocation.fromNamespaceAndPath("villagertradestats", "textures/gui/thin_background.png");
+    @Unique private static final Identifier THIN_BACKGROUND = Identifier.fromNamespaceAndPath("villagertradestats", "textures/gui/thin_background.png");
 
     @Unique private static final int MAX_VISIBLE_TRADES = 7;
 
@@ -48,8 +48,8 @@ public abstract class VillagerTradeStatsMixin extends Screen {
         super(title);
     }
 
-    @Inject(method = "renderContents", at = @At("RETURN"))
-    private void renderOverlay(GuiGraphics context, int i, int j, float f, CallbackInfo ci) {
+    @Inject(method = "extractContents", at = @At("RETURN"))
+    private void renderOverlay(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a, CallbackInfo ci) {
         if(!isVillager()) {
             return;
         }
@@ -71,23 +71,23 @@ public abstract class VillagerTradeStatsMixin extends Screen {
         int xpValueX = centerX + XP_COLUMN_OFFSET_X;
         int xpValueY = centerY + XP_COLUMN_OFFSET_Y;
 
-        renderBackground(context, backgroundX, backgroundY, cfg);
-        drawTradeStatsColumn(context, font, xpValueX, xpValueY, offers, scrollOff, highestXpPerTrade, cfg);
-        drawVillagerXp(context, font, handler, cfg);
+        renderBackground(graphics, backgroundX, backgroundY, cfg);
+        drawTradeStatsColumn(graphics, font, xpValueX, xpValueY, offers, scrollOff, highestXpPerTrade, cfg);
+        drawVillagerXp(graphics, font, handler, cfg);
     }
 
     @Unique
-    private void renderBackground(GuiGraphics context, int x, int y, VillagerTradeStatsConfig cfg) {
+    private void renderBackground(GuiGraphicsExtractor context, int x, int y, VillagerTradeStatsConfig cfg) {
         if (cfg.showTradeXp) {
             context.blit(RenderPipelines.GUI_TEXTURED, THIN_BACKGROUND, x, y, 0, 0, 25, 256, 25, 256);
         }
     }
 
     @Unique
-    private void drawTradeStatsColumn(GuiGraphics context, Font font, int x, int y, MerchantOffers offers, int startIndex, int highestXpPerTrade, VillagerTradeStatsConfig cfg) {
+    private void drawTradeStatsColumn(GuiGraphicsExtractor context, Font font, int x, int y, MerchantOffers offers, int startIndex, int highestXpPerTrade, VillagerTradeStatsConfig cfg) {
         if(cfg.showTradeXp) {
             int xpTextY = y + XP_HEADER_OFFSET_Y; // 19 pixel offset
-            context.drawString(font, "XP", x, xpTextY, 0xFF404040, false);
+            context.text(font, "XP", x, xpTextY, 0xFF404040, false);
         }
 
         int xpTextWidth = font.width("XP");
@@ -103,13 +103,13 @@ public abstract class VillagerTradeStatsMixin extends Screen {
     }
 
     @Unique
-    private void drawVillagerXp(GuiGraphics context, Font font, MerchantMenu handler, VillagerTradeStatsConfig cfg) {
+    private void drawVillagerXp(GuiGraphicsExtractor context, Font font, MerchantMenu handler, VillagerTradeStatsConfig cfg) {
         if(cfg.showVillagerXp) {
             String villagerXpText = "Villager XP: " + handler.getTraderXp();
             int villagerXpTextY = this.height/2 + VILLAGER_XP_OFFSET_Y; //half of screen and 100 pixels up
             int villagerXpTextX = (this.width - font.width(villagerXpText))/2;
 
-            context.drawString(font, villagerXpText, villagerXpTextX, villagerXpTextY, 0xFFFFFFFF, true);
+            context.text(font, villagerXpText, villagerXpTextX, villagerXpTextY, 0xFFFFFFFF, true);
         }
     }
 
@@ -128,7 +128,7 @@ public abstract class VillagerTradeStatsMixin extends Screen {
     }
 
     @Unique
-    private void drawTradeXp(GuiGraphics context, Font font, int x, int y, MerchantOffer offer, int highestXpPerTrade, int highestXpColor, int xpTextWidth, VillagerTradeStatsConfig cfg) {
+    private void drawTradeXp(GuiGraphicsExtractor context, Font font, int x, int y, MerchantOffer offer, int highestXpPerTrade, int highestXpColor, int xpTextWidth, VillagerTradeStatsConfig cfg) {
         if (cfg.showTradeXp) {
             int xp = offer.getXp();
             String xpText = String.valueOf(xp);
@@ -136,14 +136,14 @@ public abstract class VillagerTradeStatsMixin extends Screen {
             boolean isHighest = xp == highestXpPerTrade;
             int color = (isHighest) ? highestXpColor : 0xFF404040;
 
-            context.drawString(font, xpText, x + (xpTextWidth - xpValueWidth) / 2, y, color, isHighest); //isHighest for bold text
+            context.text(font, xpText, x + (xpTextWidth - xpValueWidth) / 2, y, color, isHighest); //isHighest for bold text
         }
     }
 
     @Unique
-    private void drawUsesLeft(GuiGraphics context, Font font, int x, int y, MerchantOffer offer, VillagerTradeStatsConfig cfg) {
+    private void drawUsesLeft(GuiGraphicsExtractor context, Font font, int x, int y, MerchantOffer offer, VillagerTradeStatsConfig cfg) {
         if(cfg.showUses) {
-            context.drawString(font, String.valueOf(offer.getMaxUses() - offer.getUses()), x, y, 0xFFFFFFFF, false);
+            context.text(font, String.valueOf(offer.getMaxUses() - offer.getUses()), x, y, 0xFFFFFFFF, false);
         }
     }
 
